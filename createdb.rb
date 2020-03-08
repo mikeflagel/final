@@ -5,31 +5,44 @@ DB = Sequel.connect(connection_string)                                          
 #######################################################################################
 
 # Database schema - this should reflect your domain model
-DB.create_table! :events do
+DB.create_table! :courses do
   primary_key :id
-  String :title
-  String :description, text: true
-  String :date
+  String :name
   String :location
+  String :rate
+  Boolean :range?
 end
-DB.create_table! :rsvps do
+DB.create_table! :reviews do
   primary_key :id
-  foreign_key :event_id
-  Boolean :going
+  foreign_key :courses_id
+  Boolean :recommend
   String :name
   String :email
   String :comments, text: true
+  Boolean :check_in 
 end
 
 # Insert initial (seed) data
-events_table = DB.from(:events)
+courses_table = DB.from(:courses)
 
-events_table.insert(title: "Bacon Burger Taco Fest", 
-                    description: "Here we go again bacon burger taco fans, another Bacon Burger Taco Fest is here!",
-                    date: "June 21",
-                    location: "Kellogg Global Hub")
+courses_table.insert(name: "Cog Hill Dubsdread", 
+                    location: "Lemont, IL",
+                    rate: "$200",
+                    range?: "1")
 
-events_table.insert(title: "Kaleapolooza", 
-                    description: "If you're into nutrition and vitamins and stuff, this is the event for you.",
-                    date: "July 4",
-                    location: "Nowhere")
+courses_table.insert(name: "ThunderHawk", 
+                    location: "Beach Park, IL",
+                    rate: "$90",
+                    range?: "1")
+courses_table.insert(name: "The Glen Club", 
+                    location: "Glenview, IL",
+                    rate: "$165",
+                    range?: "1")                   
+courses_table.insert(name: "Harborside International Golf Center", 
+                    location: "Chicago, IL",
+                    rate: "$90",
+                    range?: "1")
+courses_table.insert(name: "Ruffled Feathers", 
+                    location: "Chicago, IL",
+                    rate: "$90",
+                    range?: "1")

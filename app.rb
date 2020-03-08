@@ -14,5 +14,9 @@ before { puts; puts "--------------- NEW REQUEST ---------------"; puts }       
 after { puts; }                                                                       #
 #######################################################################################
 
-events_table = DB.from(:events)
-rsvps_table = DB.from(:rsvps)
+courses_table = DB.from(:courses)
+reviews_table = DB.from(:reviews)
+
+get "/" do
+    view "courses"
+end
