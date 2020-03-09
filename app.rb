@@ -18,5 +18,24 @@ courses_table = DB.from(:courses)
 reviews_table = DB.from(:reviews)
 
 get "/" do
+    puts "params: #{params}"
+
+    pp courses_table.all.to_a
+    @courses = courses_table.all.to_a
     view "courses"
+end
+
+get "/courses/:id" do
+    puts "params: #{params}"
+
+    pp courses_table.where(id: params[:id]).to_a[0]
+    @course = courses_table.where(id: params[:id]).to_a[0]
+    view "course"
+end
+
+get "/courses/:id/reviews/new" do
+    puts "params: #{params}"
+
+    @course = courses_table.where(id: params[:id]).to_a[0]
+    view "new_review"
 end
