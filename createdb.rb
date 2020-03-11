@@ -9,9 +9,11 @@ DB.create_table! :courses do
   primary_key :id
   String :name
   String :location
+  String :phone
   String :rate
-  Boolean :range?
+  String :range
 end
+
 DB.create_table! :reviews do
   primary_key :id
   foreign_key :courses_id
@@ -25,24 +27,29 @@ end
 # Insert initial (seed) data
 courses_table = DB.from(:courses)
 
-courses_table.insert(name: "Cog Hill Dubsdread", 
+courses_table.insert(name: "Cog Hill - Dubsdread", 
                     location: "Lemont, IL",
-                    rate: "$200",
-                    range?: "1")
+                    phone: "(866) 264-4455",
+                    rate: "Average Rate: $200",
+                    range: "Range?: Yes")
 
 courses_table.insert(name: "ThunderHawk", 
                     location: "Beach Park, IL",
-                    rate: "$90",
-                    range?: "1")
+                    phone: "(847) 968-4295",
+                    rate: "Average Rate: $90",
+                    range: "Range?: Yes")
 courses_table.insert(name: "The Glen Club", 
                     location: "Glenview, IL",
-                    rate: "$165",
-                    range?: "1")                   
+                    phone: "(847) 724-7272",
+                    rate: "Average Rate: $165",
+                    range: "Range?: Yes")                  
 courses_table.insert(name: "Harborside International Golf Center", 
                     location: "Chicago, IL",
-                    rate: "$90",
-                    range?: "1")
+                    phone: "312) 782-7837",
+                    rate: "Average Rate: $90",
+                    range: "Range?: Yes")
 courses_table.insert(name: "Ruffled Feathers", 
                     location: "Chicago, IL",
-                    rate: "$90",
-                    range?: "1")
+                    phone: "(630) 257-1000",
+                    rate: "Average Rate: $90",
+                    range: "Range?: Yes")

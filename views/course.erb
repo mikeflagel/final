@@ -1,29 +1,14 @@
 <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-6">
+        <h1><%= @course[:name] %></h1>
+            <p><%= @course[:location] %></p>
+            <p><%= @course[:phone] %></p>
+            <p><%= @course[:rate] %></p>
+            <p><%= @course[:range] %></p>
 
-<h1> <%= @course[:name] %> </h1>
+        <h2>Reviews</h2>
+    <div class="col-sm-6">
 
-<p><%= @course[:location] %></p>
-<p><%= @course[:rate] %></p>
-<p><%= @course[:range?] %></p>
-
- <h2>Reviews</h2>
-
-<form>
-  <div class="form-group">
-    <label for="exampleFormControlInput1">Your Name</label>
-    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Your Name">
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlSelect1">Would you recommend?</label>
-    <select class="form-control" id="exampleFormControlSelect1">
-      <option>Yes</option>
-      <option>No</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlTextarea1">Comments</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-  </div>
-   <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+    </div>
+</div>
+    
