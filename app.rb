@@ -32,7 +32,6 @@ get "/courses/:id" do
 
     pp courses_table.where(id: params[:id]).to_a[0]
     @course = courses_table.where(id: params[:id]).to_a[0]
-   
 
     view "course"
 end
