@@ -19,9 +19,7 @@ DB.create_table! :reviews do
   foreign_key :courses_id
   Boolean :recommend
   String :name
-  String :email
   String :comments, text: true
-  Boolean :check_in 
 end
 
 # Insert initial (seed) data
