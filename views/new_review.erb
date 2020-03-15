@@ -1,21 +1,17 @@
-<h1>Reviews for <%= @course[:name] %></h1>
+<h1>Review for <%= @course[:title] %></h1>
 
-<form>
 <form action="/courses/<%= @course[:id] %>/reviews/create" method="post">
-<div class="form-group">
-    <label>Your name</label>
-    <input type="text" class="form-control">
-    </div>
-<div class="form-group">
-    <label>Would You Recommend?</label>
-    <select class="form-control">
-      <option>Yes</option>
-      <option>No</option>
+  <div class="form-group">
+    <label>Would you recommend?</label>
+    <select class="form-control" name="recommend">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
     </select>
-    </div>
-<div class="form-group">
+  </div>
+
+  <div class="form-group">
     <label>Comments</label>
-    <textarea class="form-control" rows="3"></textarea>
-    </div>
+    <textarea class="form-control" rows="3" name="comments"></textarea>
+  </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>

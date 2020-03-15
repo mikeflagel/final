@@ -18,23 +18,34 @@ after { puts; }                                                                 
 
 courses_table = DB.from(:courses)
 reviews_table = DB.from(:reviews)
+users_table = DB.from(:users)
+
+before do
+    @current_user = users_table.where(id: session["user_id"]).to_a[0]
+end
 
 get "/" do
     puts "params: #{params}"
 
-    pp courses_table.all.to_a
     @courses = courses_table.all.to_a
+    pp @courses
+
     view "courses"
 end
 
 get "/courses/:id" do
     puts "params: #{params}"
 
-    pp courses_table.where(id: params[:id]).to_a[0]
+    @users_table = users_table
     @course = courses_table.where(id: params[:id]).to_a[0]
+    pp @course
+
+    @reviews = reviews_table.where(course_id: @course[:id]).to_a
+    @going_count = reviews_table.where(course_id: @course[:id], recommend: true).count
 
     view "course"
 end
+
 
 get "/courses/:id/reviews/new" do
     puts "params: #{params}"
@@ -47,13 +58,15 @@ post "/courses/:id/reviews/create" do
     puts "params: #{params}"
 
     @course = courses_table.where(id: params[:id]).to_a[0]
+   
     reviews_table.insert(
         course_id: @course[:id],
-        name: session["name"],
+        user_id: session["user_id"],
         comments: params["comments"],
-        going: params["going"]
+        recommend: params["recommend"]
     )
-    view "create_review"
+
+    redirect "/courses/#{@course[:id]}"
 end
 
 get "/reviews/:id/edit" do
@@ -67,16 +80,83 @@ end
 post "/reviews/:id/update" do
     puts "params: #{params}"
 
-    view "update_review"
+    @review = reviews_table.where(id: params["id"]).to_a[0]
+
+    @course = courses_table.where(id: @review[:course_id]).to_a[0]
+
+    if @current_user && @current_user[:id] == @review[:id]
+        reviews_table.where(id: params["id"]).update(
+            recommend: params["recommend"],
+            comments: params["comments"]
+        )
+
+        redirect "/courses/#{@course[:id]}"
+    else
+        view "error"
+    end
 end
+
 
 get "/reviews/:id/destroy" do
     puts "params: #{params}"
 
     review = reviews_table.where(id: params["id"]).to_a[0]
-    @course = reviews_table.where(id: rsvp[:event_id]).to_a[0]
+    @course = courses_table.where(id: rsvp[:event_id]).to_a[0]
 
     reviews_table.where(id: params["id"]).delete
 
-    view "destroy_review"
+    redirect "/courses/#{@course[:id]}"
+end
+
+
+get "/users/new" do
+    view "new_user"
+end
+
+
+post "/users/create" do
+    puts "params: #{params}"
+
+    existing_user = users_table.where(email: params["email"]).to_a[0]
+    
+    if existing_user
+        view "error"
+    else
+        users_table.insert(
+            name: params["name"],
+            email: params["email"],
+            password: BCrypt::Password.create(params["password"])
+        )
+
+        redirect "/logins/new"
+    end
+end
+
+
+get "/logins/new" do
+    view "new_login"
+end
+
+
+post "/logins/create" do
+    puts "params: #{params}"
+
+    @user = users_table.where(email: params["email"]).to_a[0]
+
+    if @user
+        if BCrypt::Password.new(@user[:password]) == params["password"]
+            # set encrypted cookie for logged in user
+            session["user_id"] = @user[:id]
+            redirect "/"
+        else
+            view "create_login_failed"
+        end
+    else
+        view "create_login_failed"
+    end
+end
+
+get "/logout" do
+    session["user_id"] = nil
+    redirect "/logins/new"
 end
