@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-sm-9">
+    <div class="col-sm-8">
         <h1><%= @course[:title] %></h1>
         <p><%= @course[:location] %></p>
         <p><%= @course[:phone] %></p>
@@ -19,7 +19,6 @@
                         <%= @users_table.where(id: review[:user_id]).to_a[0][:name] %>
 
                         <small>
-                            <!-- only show these links if it's my review -->
                             <% if @current_user && @current_user[:id] == review[:user_id] %>
                                 (<a href="/reviews/<%= review[:id] %>/edit">edit</a> | <a href="/reviews/<%= review[:id] %>/destroy">delete</a>)
                             <% end %>
@@ -33,12 +32,12 @@
             <% if @current_user %>
                 <a href="/courses/<%= @course[:id] %>/reviews/new" class="btn btn-primary">Review Now!</a>
             <% else %>
-                <a href="/logins/new" class="btn btn-danger">Please sign in to Review</a>
-            <% end %>
+                <a href="/logins/new" class="btn btn-success">Sign In to Review</a>
+            <% end %> 
         </p>
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-4">
         <h3>How many Golfers recommend this course?</h3>
-        <p><%= @recommend_count %></p>
+        <p1><%= @recommend_count %></p1>
     </div>
 </div>

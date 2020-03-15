@@ -41,7 +41,7 @@ get "/courses/:id" do
     pp @course
 
     @reviews = reviews_table.where(course_id: @course[:id]).to_a
-    @going_count = reviews_table.where(course_id: @course[:id], recommend: true).count
+    @recommend_count = reviews_table.where(course_id: @course[:id], recommend: true).count
 
     view "course"
 end
@@ -145,7 +145,7 @@ post "/logins/create" do
 
     if @user
         if BCrypt::Password.new(@user[:password]) == params["password"]
-            # set encrypted cookie for logged in user
+            
             session["user_id"] = @user[:id]
             redirect "/"
         else
