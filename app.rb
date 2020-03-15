@@ -42,11 +42,11 @@ get "/courses/:id" do
 
     @reviews = reviews_table.where(course_id: @course[:id]).to_a
     @recommend_count = reviews_table.where(course_id: @course[:id], recommend: true).count
-
+    
     @lat = rand(-90.0..90.0)
     @long = rand(-180.0..180.0)
     @lat_long = "#{@lat},#{@long}"
-
+    
     view "course"
 end
 
