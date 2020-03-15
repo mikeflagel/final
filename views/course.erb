@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-7">
         <h1><%= @course[:title] %></h1>
         <p><%= @course[:location] %></p>
         <p><%= @course[:phone] %></p>
@@ -35,9 +35,18 @@
                 <a href="/logins/new" class="btn btn-success">Sign In to Review</a>
             <% end %> 
         </p>
-    </div>
-    <div class="col-sm-4">
         <h3>How many Golfers recommend this course?</h3>
-        <p1><%= @recommend_count %></p1>
+        <p><%= @recommend_count %></p>
+    </div>
+    <div class="col-sm-5">
+        <div class="container mt-5">
+      <h1>Course Map</h1>
+      <iframe
+        width="450"
+        height="350"
+        frameborder="0" style="border:0"
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCtovsQvkIUWlNqtYwXY87gEd4ZSmJEhMw
+          &q=<%= @lat_long %>&zoom=6" allowfullscreen>
+      </iframe>
     </div>
 </div>
